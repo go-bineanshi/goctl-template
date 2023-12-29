@@ -11,9 +11,9 @@ var configFile = flag.String("f", "etc/{{.serviceName}}.yaml", "the config file"
 
 func main() {
 	flag.Parse()
-
+	logx.DisableStat()
 	var c config.Config
-	conf.MustLoad(*configFile, &c)
+	conf.MustLoad(*configFile, &c, conf.UseEnv())
 
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
